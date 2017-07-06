@@ -1,0 +1,68 @@
+# RELEASE - Location of external support modules
+#
+# IF YOU MAKE ANY CHANGES to this file you must subsequently
+# do a "gnumake rebuild" in this application's top level
+# directory.
+#
+# The build process does not check dependencies against files
+# that are outside this application, thus you should do a
+# "gnumake rebuild" in the top level directory after EPICS_BASE
+# or any other external module pointed to below is rebuilt.
+#
+# Host- or target-specific settings can be given in files named
+#  RELEASE.$(EPICS_HOST_ARCH).Common
+#  RELEASE.Common.$(T_A)
+#  RELEASE.$(EPICS_HOST_ARCH).$(T_A)
+#
+# This file is parsed by both GNUmake and an EPICS Perl script,
+# so it can ONLY contain definititions of paths to other support
+# modules, variable definitions that are used in module paths,
+# and include statements that pull in other RELEASE files.
+# Variables may be used before their values have been set.
+# Build variables that are NOT used in paths should be set in
+# the CONFIG_SITE file.
+
+# Variables and paths to dependent modules:
+#MODULES = /path/to/modules
+#MYMODULE = $(MODULES)/my-module
+#EPICS_RELEASE=R3.14.12.4
+EPICS_RELEASE=R3.14.12.6
+#EPICS_RELEASE=R3.15.5
+PROD_SUPP=/gem_sw/prod/$(EPICS_RELEASE)/support
+WORK_SUPP=/gem_sw/work/$(EPICS_RELEASE)/support
+TEST_SUPP=/home/mrippa/work/$(EPICS_RELEASE)/support
+TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
+
+#IOCSTATS=$(PROD_SUPP)/iocStats/3-1-14-3
+IOCSTATS=$(WORK_SUPP)/iocStats
+#SNCSEQ=$(PROD_SUPP)/seq/2-2-3-1
+SNCSEQ=$(WORK_SUPP)/seq
+#GEMREC=$(PROD_SUPP)/geminiRec/4-1-5
+GEMREC=$(WORK_SUPP)/geminiRec
+#PVLOAD=$(PROD_SUPP)/pvload/1-1-1
+PVLOAD=$(WORK_SUPP)/pvload
+#PMAC=$(PROD_SUPP)/pmaclib/1-1-4
+PMAC=$(WORK_SUPP)/pmaclib
+#BANCOMM=$(PROD_SUPP)/bancomm/1-6-4
+BANCOMM=$(WORK_SUPP)/bancomm
+#TIMELIB=$(PROD_SUPP)/timelib/1-9-5
+TIMELIB=$(WORK_SUPP)/timelib
+#SLALIB=$(PROD_SUPP)/slalib/1-9-5
+SLALIB=$(WORK_SUPP)/slalib
+#XYCOM=$(PROD_SUPP)/xycom/2-1-3
+XYCOM=$(WORK_SUPP)/xycom
+#GEMUTILS=$(PROD_SUPP)/gemUtil/1-3
+GEMUTILS=$(WORK_SUPP)/gemUtil
+
+# EPICS_BASE usually appears last so other apps can override stuff:
+EPICS_BASE = /gem_sw/epics/$(EPICS_RELEASE)/base
+
+# Set RULES here if you want to use build rules from somewhere
+# other than EPICS_BASE:
+#RULES = $(MODULES)/build-rules
+
+# These allow developers to override the RELEASE variable settings
+# without having to modify the configure/RELEASE file itself.
+-include $(TOP)/../RELEASE.local
+-include $(TOP)/configure/RELEASE.local
+
